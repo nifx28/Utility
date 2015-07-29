@@ -19,7 +19,7 @@ class Cfg:
             qstr = '"' if isinstance(v, basestring) else '' # 字串配置變數加上雙引號。
             str.append('"%s" = %s%s%s' % (k, qstr, v, qstr))
 
-        return os.linesep.join(str)
+        return '\n'.join(str)
 
 argv0 = os.path.abspath(__file__)
 
@@ -92,11 +92,13 @@ class Cli: # 命令列功能。
         getpass('')
 
     def notes(self, showDesc=False): # 產生網頁超連結。
-        link = '<a href="' + cfg.wsURI + '">%s</a>'
+        link = '%2d. <a href="' + cfg.wsURI + '">%s</a>'
         desc = ' %s Mod category: %s'
         str = []
+        strN = 0
 
         for mod in mods:
+            strN += 1
             t1 = mod['title']
             m = re.match(r'^\'(.+)\'$', t1) # 比對特徵。
 
@@ -125,26 +127,26 @@ class Cli: # 命令列功能。
                     del t3[ti]
 
                 t3 = ', '.join(t3)
-                str.append((link + desc) % (mod['Id'], t1, t2, t3))
+                str.append((link + desc) % (strN, mod['Id'], t1, t2, t3))
             else:
-                str.append(link % (mod['Id'], t1))
+                str.append(link % (strN, mod['Id'], t1))
 
         return str
 
     def notesFB(self, showDesc=False): # 產生臉書網誌。
-        print u'''\
+        print '''\
 伺服器安裝MOD表({:%m/%d})
 
-使用 Python v{ver.major}.{ver.minor} 程式 <a href="https://github.com/nifx28/Utility/blob/master/SpaceEngineers/Mods.py">Mods.py</a> 讀取 <b>C:\\Users\\使用者\\AppData\\Roaming\\SpaceEngineers\\SpaceEngineers.log</b> 產生。
-
-Workshop 列表：
+工作坊列表：
 
 {!s}
 
 伺服器 Mods 輸入欄位：
 
 {!s}
-'''.format(date.today(), os.linesep.join(self.notes(showDesc)), os.linesep.join(self.get()), ver=sys.version_info)
+
+此文件使用 Python v{ver.major}.{ver.minor} 程式 <a href="https://github.com/nifx28/Utility/blob/master/SpaceEngineers/Mods.py">Mods.py</a> 讀取 <b>C:\\Users\\使用者\\AppData\\Roaming\\SpaceEngineers\\SpaceEngineers.log</b> 產生。\
+'''.format(date.today(), '\n'.join(self.notes(showDesc)), '\n'.join(self.get()), ver=sys.version_info)
 
     def batch(self, src=cfg.clientPath, dst=cfg.serverPath): # 產生 Mods 資料夾同步批次檔。
         try:
@@ -181,7 +183,17 @@ if (__name__ == '__main__'): # 從命令列執行。
     batchDst = None
 
     if len(sys.argv) > 1:
-        if sys.argv[1] == 'version': # 顯示版本。
+        if sys.argv[1] == 'usages': # 顯示使用說明。
+            print '''\
+Mods.py usages
+Mods.py version
+Mods.py showcfg
+Mods.py > {0}.log
+Mods.py notes yes > {0}_notes.log
+Mods.py facebook yes > {0}_facebook.log
+Mods.py batch\
+'''.format(date.today())
+        elif sys.argv[1] == 'version': # 顯示版本。
             print 'Python v%s' % platform.python_version()
         elif sys.argv[1] == 'showcfg': # 列出配置變數。
             print cfg
@@ -212,15 +224,15 @@ if (__name__ == '__main__'): # 從命令列執行。
     cli = Cli() # 命令列功能。
 
     if pause:
-        cli.pause()										# Mods.py pause
+        cli.pause()								# Mods.py pause
     elif notes:
-        print os.linesep.join(cli.notes(notesDesc))		# Mods.py notes [yes]
+        print '\n'.join(cli.notes(notesDesc))	# Mods.py notes [yes]
     elif notesFB:
-        cli.notesFB(notesDesc)							# Mods.py facebook [yes]
+        cli.notesFB(notesDesc)					# Mods.py facebook [yes]
     elif batch:
         if batchSrc and batchDst:
-            cli.batch(batchSrc, batchDst)				# Mods.py batch [src] [dst]
+            cli.batch(batchSrc, batchDst)		# Mods.py batch [src] [dst]
         else:
-            cli.batch()									# Mods.py batch
+            cli.batch()							# Mods.py batch
     else:
-        print os.linesep.join(cli.get())				# Mods.py
+        print '\n'.join(cli.get())				# Mods.py
