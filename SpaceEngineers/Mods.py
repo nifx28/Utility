@@ -22,14 +22,17 @@ class Cfg:
         return '\n'.join(str)
 
 argv0 = os.path.abspath(__file__)
+dirname = os.path.dirname(argv0)
+basename = os.path.splitext(os.path.basename(argv0))[0]
+appdata = os.getenv('APPDATA')
 
 cfg = Cfg({ # 配置變數預設值。
-    'logFile':		'%s\SpaceEngineers.log' % os.path.dirname(argv0),
-    'serverPath':	'%s\SpaceEngineersDedicated\Mods' % os.getenv('APPDATA'),
-    'clientPath':	'%s\SpaceEngineers\Mods' % os.getenv('APPDATA'),
-    'gameLogFile':	'%s\SpaceEngineers\SpaceEngineers.log' % os.getenv('APPDATA'),
+    'logFile':		r'%s\SpaceEngineers.log' % dirname,
+    'serverPath':	r'%s\SpaceEngineersDedicated\Mods' % appdata,
+    'clientPath':	r'%s\SpaceEngineers\Mods' % appdata,
+    'gameLogFile':	r'%s\SpaceEngineers\SpaceEngineers.log' % appdata,
     'wsURI':		'http://steamcommunity.com/sharedfiles/filedetails/?id=%s',
-    'batchFile':	'%s\%s.cmd' % (os.path.dirname(argv0), os.path.splitext(os.path.basename(argv0))[0])
+    'batchFile':	r'%s\%s.cmd' % (dirname, basename)
 })
 
 class Mods:
@@ -82,16 +85,39 @@ class Mods:
 
         return kvd
 
-class Cli: # 命令列功能。
-    def pause(self): # 若使用捷徑執行則暫停。
-        for mod in mods:
-            print '\'%s\': %s' % (mod['Id'], mod['title'])
+class ModsId:
+    def __init__(self, syncDate):
+        self.f = None
+        self.mod = []
 
-        sys.stdout.write(u'請按任意鍵繼續 . . . ')
+        try:
+            self.f = open(r'%s\%s.log' % (dirname, syncDate), 'r') # Id 紀錄檔。
+        except IOError as e:
+            print '%s: %s' % (e.strerror, e.filename)
+
+    def __del__(self):
+        if self.f:
+            self.f.close() # 關閉檔案。
+
+    def get(self): # 取得 Mod 資訊。
+        if self.f:
+            for line in iter(self.f.readline, ''): # 讀出每一行記錄。
+                self.mod.append({'Id': line[:-1]}) # 設定欄位變數值。
+
+            return self.mod
+
+class Cli: # 命令列功能。
+    @staticmethod
+    def verbose(): # 若使用捷徑執行則暫停。
+        for mod in mods:
+            print ('\'%s\': %s' % (mod['Id'], mod['title'])).decode('utf-8')
+
+        sys.stdout.write(u'請按任意鍵繼續 . . . ') # 已知問題：Unicode 輸出，重新導向會異常。
         sys.stdout.flush()
         getpass('')
 
-    def notes(self, showDesc=False): # 產生網頁超連結。
+    @staticmethod
+    def notes(showDesc=False): # 產生網頁超連結。
         link = '%2d. <a href="' + cfg.wsURI + '">%s</a>'
         desc = ' %s Mod category: %s'
         str = []
@@ -133,7 +159,8 @@ class Cli: # 命令列功能。
 
         return str
 
-    def notesFB(self, showDesc=False): # 產生臉書網誌。
+    @staticmethod
+    def notesFB(showDesc=False): # 產生臉書網誌。
         print '''\
 伺服器安裝MOD表({:%m/%d})
 
@@ -146,9 +173,10 @@ class Cli: # 命令列功能。
 {!s}
 
 此文件使用 Python v{ver.major}.{ver.minor} 程式 <a href="https://github.com/nifx28/Utility/blob/master/SpaceEngineers/Mods.py">Mods.py</a> 讀取 <b>C:\\Users\\使用者\\AppData\\Roaming\\SpaceEngineers\\SpaceEngineers.log</b> 產生。\
-'''.format(date.today(), '\n'.join(self.notes(showDesc)), '\n'.join(self.get()), ver=sys.version_info)
+'''.format(date.today(), '\n'.join(Cli.notes(showDesc)), '\n'.join(Cli.get()), ver=sys.version_info)
 
-    def batch(self, src=cfg.clientPath, dst=cfg.serverPath): # 產生 Mods 資料夾同步批次檔。
+    @staticmethod
+    def batch(src=cfg.clientPath, dst=cfg.serverPath): # 產生 Mods 資料夾同步批次檔。
         try:
             f = open(cfg.batchFile, 'w')
         except IOError as e:
@@ -165,7 +193,8 @@ title Space Engineers (%d)
 
             f.close()
 
-    def get(self): # 伺服器 Mods 輸入欄位。
+    @staticmethod
+    def get(): # 伺服器 Mods 輸入欄位。
         str = []
 
         for mod in mods:
@@ -174,65 +203,89 @@ title Space Engineers (%d)
         return str
 
 if (__name__ == '__main__'): # 從命令列執行。
-    pause = False
+    verbose = False
     notes = False
     notesFB = False
     notesDesc = False
     batch = False
     batchSrc = None
     batchDst = None
+    sync = False
+    syncDate = None
 
     if len(sys.argv) > 1:
-        if sys.argv[1] == 'usages': # 顯示使用說明。
+        if sys.argv[1] == 'usage': # 顯示使用說明。
+            print 'Mods.py [verbose|usage|help|version|cfg|notes|facebook|batch|sync] args...'
+        elif sys.argv[1] == 'help': # 顯示求助說明。
             print '''\
-Mods.py usages
+Mods.py
+Mods.py verbose
+Mods.py usage
+Mods.py help
 Mods.py version
-Mods.py showcfg
+Mods.py cfg
 Mods.py > {0}.log
 Mods.py notes yes > {0}_notes.log
 Mods.py facebook yes > {0}_facebook.log
-Mods.py batch\
+Mods.py batch
+Mods.py sync {0}\
 '''.format(date.today())
         elif sys.argv[1] == 'version': # 顯示版本。
             print 'Python v%s' % platform.python_version()
-        elif sys.argv[1] == 'showcfg': # 列出配置變數。
+        elif sys.argv[1] == 'cfg': # 列出配置變數。
             print cfg
 
-        if sys.argv[1] == 'pause': # 若使用捷徑執行則暫停。
-            pause = True
+        if sys.argv[1] == 'verbose': # 若使用捷徑執行則暫停。
+            verbose = True
         elif sys.argv[1] == 'notes': # 產生網頁超連結。
             notes = True
         elif sys.argv[1] == 'facebook': # 產生臉書網誌。
             notesFB = True
         elif sys.argv[1] == 'batch': # 產生 Mods 資料夾同步批次檔。
             batch = True
+        elif sys.argv[1] == 'sync': # 產生 Mods 資料夾同步批次檔。
+            batch = True
+            sync = True
         else:
             sys.exit() # 資訊顯示。
 
     if len(sys.argv) > 2:
         if (notes or notesFB) and sys.argv[2] == 'yes': # 新增 Mod 描述。
             notesDesc = True
+        elif sync: # Id 紀錄檔來源。
+            syncDate = sys.argv[2]
         elif batch: # Mods 資料夾同步來源。
             batchSrc = sys.argv[2]
 
+    if sync and not syncDate:
+        sys.exit() # 未指定同步日期。
+
     if len(sys.argv) > 3:
-        if batch: # Mods 資料夾同步目的。
+        if sync: # Mods 資料夾同步來源。
+            batchSrc = sys.argv[3]
+        elif batch: # Mods 資料夾同步目的。
             batchDst = sys.argv[3]
 
-    mods = Mods().get() # 從遊戲紀錄檔取得 Mod 列表。
-    mods.sort(cmp = lambda a, b: cmp(int(a['Id']), int(b['Id']))) # 排序 Mod 列表，Id 由小到大。
-    cli = Cli() # 命令列功能。
+    if len(sys.argv) > 4:
+        if sync: # Mods 資料夾同步目的。
+            batchDst = sys.argv[4]
 
-    if pause:
-        cli.pause()								# Mods.py pause
+    if not sync:
+        mods = Mods().get() # 從遊戲紀錄檔取得 Mod 列表。
+        mods.sort(cmp = lambda a, b: cmp(int(a['Id']), int(b['Id']))) # 排序 Mod 列表，Id 由小到大。
+    else:
+        mods = ModsId(syncDate).get() # 從 Id 紀錄檔取得 Mod 列表。
+
+    if verbose:
+        Cli.verbose()							# Mods.py verbose
     elif notes:
-        print '\n'.join(cli.notes(notesDesc))	# Mods.py notes [yes]
+        print '\n'.join(Cli.notes(notesDesc))	# Mods.py notes [yes]
     elif notesFB:
-        cli.notesFB(notesDesc)					# Mods.py facebook [yes]
+        Cli.notesFB(notesDesc)					# Mods.py facebook [yes]
     elif batch:
         if batchSrc and batchDst:
-            cli.batch(batchSrc, batchDst)		# Mods.py batch [src] [dst]
+            Cli.batch(batchSrc, batchDst)		# Mods.py {batch|sync} [src] [dst]
         else:
-            cli.batch()							# Mods.py batch
+            Cli.batch()							# Mods.py {batch|sync}
     else:
-        print '\n'.join(cli.get())				# Mods.py
+        print '\n'.join(Cli.get())				# Mods.py

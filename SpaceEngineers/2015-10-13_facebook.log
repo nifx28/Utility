@@ -1,0 +1,67 @@
+伺服器安裝MOD表(10/13)
+
+工作坊列表：
+
+ 1. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=350106127">CSD Battlecannon</a>
+ 2. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=383448637">XL Industrial</a>
+ 3. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=386647996">S - Thruster - DX11</a>
+ 4. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=388580965">(DX11)Minotaur Cannon</a>
+ 5. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=405233525">(DX11)Deep Space Transceiver</a>
+ 6. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=416810412">S - Airtight Door - DX11</a>
+ 7. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=419588209">MWI - Main Battleship Cannon Mk3 (DX11)</a>
+ 8. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=423502909">MWI -Battleship Cannon MK2 (DX11)</a>
+ 9. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=427847648">MWI - Telion Defense System (DX11)</a>
+10. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=434749358">[MWI] Telion - Heavy Defense turret (DX11)</a>
+11. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=436025957">(DX11) Kolt - Command Console Pack</a>
+12. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=438226588">Hangar Gates (DX 11)</a>
+13. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=441223817">[SEI] Weapon Pack DX11</a>
+14. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=441722178">(DX11) Blast Door</a>
+15. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=443961421">XPAR Modular Energy</a>
+16. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=446761633">S - Airtight Dome - DX11</a>
+17. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=447885637">XPAR Elegant Solar</a>
+18. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=451486869">Hammerman decoration pack (DX11)</a>
+19. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=454075333">Female Armor "Tungsten" [DX11]</a>
+20. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=456560585">S - Anubis - side thruster - DX11</a>
+21. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=471753867">[codecat]Gyroscopes [DX11]</a>
+22. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=473306528">S - Interior Walls - DX11</a>
+23. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=475375953">[Mexpex] Heavy Mining Drill</a>
+24. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=484504816">(ALPHA) Energy Shields</a>
+25. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=504250615">S - Cratos thruster - DX11</a>
+26. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=506934333">S - Retractable Tunnel - DX11</a>
+27. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=517675282">Projector Preview - miniature blueprint display</a>
+28. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=530693136">Corner Lights</a>
+29. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=531659576">Exploration Enhancement Mod</a>
+
+伺服器 Mods 輸入欄位：
+
+350106127
+383448637
+386647996
+388580965
+405233525
+416810412
+419588209
+423502909
+427847648
+434749358
+436025957
+438226588
+441223817
+441722178
+443961421
+446761633
+447885637
+451486869
+454075333
+456560585
+471753867
+473306528
+475375953
+484504816
+504250615
+506934333
+517675282
+530693136
+531659576
+
+此文件使用 Python v2.7 程式 <a href="https://github.com/nifx28/Utility/blob/master/SpaceEngineers/Mods.py">Mods.py</a> 讀取 <b>C:\Users\使用者\AppData\Roaming\SpaceEngineers\SpaceEngineers.log</b> 產生。

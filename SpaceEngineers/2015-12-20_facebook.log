@@ -1,0 +1,47 @@
+伺服器安裝MOD表(12/20)
+
+工作坊列表：
+
+ 1. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=316190120">Midspace's Admin helper commands</a> Type: Mod. Mod category: script
+ 2. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=358112540">Twin Welders (DX11)</a> Type: Mod. Mod category: Block
+ 3. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=386647996">S - Thruster - DX11</a> Type: Mod. Mod category: Block
+ 4. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=405233525">(DX11)Deep Space Transceiver</a> Type: Mod. Mod category: Block
+ 5. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=419588209">MWI - Main Battleship Cannon Mk3 (DX11)</a> Type: Mod. Mod category: Block
+ 6. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=423502909">MWI -Battleship Cannon MK2 (DX11)</a> Type: Mod. Mod category: Block
+ 7. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=427847648">MWI - Telion Defense System (DX11)</a> Type: Mod. Mod category: Block
+ 8. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=434749358">[MWI] Telion - Heavy Defense turret (DX11)</a> Type: Mod. Mod category: Block
+ 9. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=454075333">Female Armor "Tungsten" [DX11]</a> Type: Mod. Mod category: Character
+10. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=462318043">[DX9-DX11]    Nebula！ Sailing here！     [VagreLider-江南造神]</a> Type: Mod. Mod category: Skybox
+11. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=471753867">[codecat]Gyroscopes [DX11]</a> Type: Mod. Mod category: Block, modpack
+12. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=475375953">[Mexpex] Heavy Mining Drill</a> Type: Mod. Mod category: Block
+13. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=504250615">S - Cratos thruster - DX11</a> Type: Mod. Mod category: Block
+14. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=531488481">RB Compact Tools (Welder, Grinder & Drill) [DX11]</a> Type: Mod. Mod category: Block
+15. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=562510036">S - Starship Troopers ALL 3 Bugs v1</a> Type: Mod. Mod category: Character
+16. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=565575999">Warbros ft. Okim: Mech & Tank Weapons (DX11 Edition)</a> Type: Mod. Mod category: Block
+17. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=575733880">Medieval Stone Blocks</a> Type: Mod. Mod category: Block, modpack
+18. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=577079238">"Skyblade" Helicopter Propellers</a> Type: Mod. Mod category: Block
+19. <a href="http://steamcommunity.com/sharedfiles/filedetails/?id=577318708">(DX11)Power Lines</a> Type: Mod. Mod category: Block
+
+伺服器 Mods 輸入欄位：
+
+316190120
+358112540
+386647996
+405233525
+419588209
+423502909
+427847648
+434749358
+454075333
+462318043
+471753867
+475375953
+504250615
+531488481
+562510036
+565575999
+575733880
+577079238
+577318708
+
+此文件使用 Python v2.7 程式 <a href="https://github.com/nifx28/Utility/blob/master/SpaceEngineers/Mods.py">Mods.py</a> 讀取 <b>C:\Users\使用者\AppData\Roaming\SpaceEngineers\SpaceEngineers.log</b> 產生。
