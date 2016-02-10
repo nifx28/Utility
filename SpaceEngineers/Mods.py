@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
 import platform, sys, os, re
 from datetime import date
 from operator import itemgetter
