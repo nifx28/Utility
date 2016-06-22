@@ -72,7 +72,7 @@
     $ctx = stream_context_create(array(
         'http' => array( // 雖然是 HTTPS 安全性連線，仍然沿用 http。
             'method'  => 'POST',
-            'header'  => 'Content-type: application/x-www-form-urlencoded', // POST 表單資料。
+            'header'  => 'Content-Type: application/x-www-form-urlencoded', // POST 表單資料。
             'content' => http_build_query(array('payload' => json_encode( $payload )))
         )
     ));
