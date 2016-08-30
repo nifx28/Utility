@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # coding: utf-8
 import sys
-from urllib.request import *
+from urllib.request import Request, urlopen
+from urllib.error import URLError
 from shutil import *
 from base64 import *
 from hashlib import *
@@ -16,8 +17,15 @@ class Integrity:
             hash = b64decode(hash[7:]).hex()
 
             if file and url:
-                with urlopen(url) as r, open(file, 'wb') as bf:
-                    copyfileobj(r, bf)
+                try:
+                    req = Request(url)
+                    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36')
+
+                    with urlopen(req) as r, open(file, 'wb') as bf:
+                        copyfileobj(r, bf)
+                except URLError as e:
+                    print(e.code, e.reason)
+                    return
         else:
             alg = '256' if len(hash) == 64 else alg
             alg = '384' if len(hash) == 96 else alg
